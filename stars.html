@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>stars</title>
+</head>
+<body>
+<!DOCTYPE HTML>
+<html style="padding:0;margin:0;">
+<head>
+<title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+     html, body{
+        height:100%;
+        width:100%;
+    <SPAN style="WHITE-SPACE: pre">  </SPAN>padding: 0;
+    <SPAN style="WHITE-SPACE: pre">  </SPAN>margin: 0;
+    <SPAN style="WHITE-SPACE: pre">  </SPAN>overflow:hidden;
+    }
+    #myCanvas{
+     background:black;
+     height:100%;
+     width:100%;
+     padding: 0;
+     margin: 0;
+    }
+    *{
+-webkit-tap-highlight-color: rgba(0,0,0,0);
+margin:0 auto;
+}
+    </style>
+</head>
+
+
+<body style="padding:0;margin:0;overflow-y:hidden">
+<canvas id="myCanvas" width="1000"  height="500" draggable="true"></canvas>
+<script type="text/javascript">
+
+
+    
+    function Star() {
+        _this = this;
+        _this.x = -1;
+        _this.y = -1;
+        _this.color = "#FFFF00";
+        _this.speed = 25;
+        _this.m = 0;
+        _this.n = 0;
+        _this.s = 20;//边长
+
+
+        //随机颜色
+        this.getColor = function () {
+            _this.r = Math.ceil(Math.random() * 255);
+            _this.g = Math.ceil(Math.random() * 255);
+            _this.b = Math.ceil(Math.random() * 255);
+            _this.color = "rgb(" + _this.r + "," + _this.g + "," + _this.b + ")";
+            return _this.color;
+        }
+
+
+        this.getSide = function () {
+            _this.s = Math.ceil(Math.random() *10+5);
+            return _this.s;
+        }
+
+
+        this.drawStar = function (cxt) {
+            _this.m = Math.ceil(Math.random() * 800 + 100);
+            _this.n = Math.ceil(Math.random() * 400 + 10);
+            var dig = Math.PI / 5 * 4;
+            _this.s = this.getSide();
+            _this.color = this.getColor();
+            cxt.beginPath();
+            cxt.fillStyle = _this.color;
+            for (var i = 0; i < 5; i++) {
+                _this.x = Math.sin(i * dig);
+                _this.y = Math.cos(i * dig);
+                cxt.lineTo(_this.m + _this.x * _this.s, _this.n + _this.y * _this.s);
+            }
+            //cxt.translate(_this.mx, _this.my);
+            //cxt.rotate(Math.PI / 8); //旋转
+            cxt.closePath();
+            cxt.fill();
+            cxt.save();
+
+
+
+
+        }
+
+
+        this.drawAllstar = function (max, cxt,height,width) {
+            cxt.clearRect(0, 0, height, width);
+            cxt.save();
+            for (var i = 0; i < max; i++) {
+                this.drawStar(cxt);
+            }
+            cxt.restore();
+        }
+
+
+        this.init = function (max, cxt, width, height) {
+            this.getSide();
+            //this.drawAllstar(max, cxt, height, width);
+        }
+
+
+    }
+    var canvas = document.getElementById('myCanvas');
+    var cxt = canvas.getContext('2d');
+    var stars = new Star();
+    setInterval(function () {
+        stars.drawAllstar(50, cxt, 1000, 800);
+    }, 2000);
+    </script>
+</body>
+</html>
+</body>
+</html>
